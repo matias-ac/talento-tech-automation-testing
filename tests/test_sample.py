@@ -9,6 +9,10 @@ def test_answer():
     assert inc(3) == 4
 
 
-driver = webdriver.Chrome()
-driver.get("https://www.saucedemo.com")
-driver.quit()
+def test_saucedemo_title():
+    driver = webdriver.Chrome()
+    try:
+        driver.get("https://www.saucedemo.com")
+        assert "Swag Labs" in driver.title
+    finally:
+        driver.quit()
