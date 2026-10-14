@@ -56,11 +56,11 @@ pip install -r requirements.txt
 
 ```
 talento-tech-automation-testing/
-|-- data                    # datos externos como CSV/JSON 
-|-- docs                    # consigna, links útiles, guías, etc.
-|-- reports                 # reportes HTML y capturas
-|-- tests                   # archivos de tests 
-|-- utils                   # funciones auxiliares
+|-- data/                    # datos externos como CSV/JSON 
+|-- docs/                    # consigna, links útiles, guías, etc.
+|-- reports/                 # reportes HTML y capturas
+|-- tests/                   # archivos de tests 
+|-- utils/                   # funciones auxiliares
 .gitignore                  
 README.md
 pytest.ini
