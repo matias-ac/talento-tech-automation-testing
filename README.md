@@ -50,4 +50,19 @@ pip install -r requirements.txt
 - `pytest -v`: ejecuta los tests con mayor verbosidad (nivel de detalle) 
 - `pytest -v -m smoke`: solo ejecuta tests críticos
 - `pytest -v -m exception`: solo ejecuta tests que validan errores 
-- `pytest --html=reports/report.hml --self-contained-html`
+- `pytest --html=reports/report.html --self-contained-html`
+
+## Estructura del Proyecto
+
+```
+talento-tech-automation-testing/
+|-- data                    # datos externos como CSV/JSON 
+|-- docs                    # consigna, links útiles, guías, etc.
+|-- reports                 # reportes HTML y capturas
+|-- tests                   # archivos de tests 
+|-- utils                   # funciones auxiliares
+.gitignore                  
+README.md
+pytest.ini
+requirements.txt
+```
