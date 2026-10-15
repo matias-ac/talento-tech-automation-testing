@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from utils.helpers import login
+
 URL = "https://www.saucedemo.com"
 TEST_CREDENTIALS = {
     "valid": {"username": "standard_user", "password": "secret_sauce"},
@@ -16,33 +18,37 @@ def driver():
     # Iniciar el navegador
     driver = webdriver.Chrome()
 
+    # Pasa el driver a cada test
     yield driver
 
+    # Cierra el driver después de la ejecución de cada test
     driver.quit()
 
 
 def test_login_exitoso_y_redirecciona_a_inventario(driver):
-    # Iniciar el navegador
-    # driver = webdriver.Chrome()
-
-    # try:
-    # Configura espera explícita en máximo 2 segundos
-    wait = WebDriverWait(driver, 2)
+    # Configura espera explícita en máximo 5 segundos
+    wait = WebDriverWait(driver, 5)
 
     # Abrir página
     driver.get(URL)
 
-    # Localizar elementos
-    user_input = driver.find_element(By.ID, "user-name")
-    password_input = driver.find_element(By.ID, "password")
-    login_button = driver.find_element(By.ID, "login-button")
+    # # Localizar elementos
+    # user_input = driver.find_element(By.ID, "user-name")
+    # password_input = driver.find_element(By.ID, "password")
+    # login_button = driver.find_element(By.ID, "login-button")
+    #
+    # # Ingresar credenciales
+    # user_input.send_keys(TEST_CREDENTIALS["valid"]["username"])
+    # password_input.send_keys(TEST_CREDENTIALS["valid"]["password"])
+    #
+    # # Click en botón login
+    # login_button.click()
 
-    # Ingresar credenciales
-    user_input.send_keys(TEST_CREDENTIALS["valid"]["username"])
-    password_input.send_keys(TEST_CREDENTIALS["valid"]["password"])
-
-    # Click en botón login
-    login_button.click()
+    login(
+        driver,
+        TEST_CREDENTIALS["valid"]["username"],
+        TEST_CREDENTIALS["valid"]["password"],
+    )
 
     # Espera a que el contenedor del inventario sea visible
     wait.until(EC.visibility_of_element_located((By.ID, "inventory_container")))
@@ -54,15 +60,9 @@ def test_login_exitoso_y_redirecciona_a_inventario(driver):
     assert (
         driver.find_element(By.CSS_SELECTOR, "[data-test='title']").text == "Products"
     )
-    # finally:
-    # driver.quit()
 
 
 def test_login_fallido_muestra_error_de_credenciales(driver):
-    # Iniciar el navegador
-    # driver = webdriver.Chrome()
-
-    # try:
     # Configura espera explícita en máximo 5 segundos
     wait = WebDriverWait(driver, 5)
 
@@ -91,5 +91,3 @@ def test_login_fallido_muestra_error_de_credenciales(driver):
         "Epic sadface: Username and password do not match any user in this service"
     )
     assert invalid_credentials_error_message in error_container.text
-    # finally:
-    # driver.quit()
