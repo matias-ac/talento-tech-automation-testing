@@ -73,3 +73,26 @@ def test_login_fallido_muestra_error_de_credenciales(driver):
         "Epic sadface: Username and password do not match any user in this service"
     )
     assert invalid_credentials_error_message in error_container.text
+
+
+def test_login_fallido_input_password_vacio(driver):
+    # Configura espera explícita en máximo 5 segundos
+    wait = WebDriverWait(driver, 5)
+
+    # Navegar a la URL de SauceDemo
+    driver.get(URL)
+
+    login(
+        driver,
+        TEST_CREDENTIALS["invalid"]["username"],
+        "",
+    )
+
+    # Espera a que el contenedor del error sea visible
+    error_container = wait.until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-test='error']"))
+    )
+
+    # Valida que el contenedor del error tenga el texto indicando las credenciales inválidas
+    empty_password_error_message = "Epic sadface: Password is required"
+    assert empty_password_error_message in error_container.text
