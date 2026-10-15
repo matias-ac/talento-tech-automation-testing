@@ -53,3 +53,32 @@ def test_catalogo_contiene_titulo_correcto(driver):
 
     # - verificar que el título del catálogo sea "Products"
     assert products_container_title.text == "Products"
+
+
+def test_catalogo_contiene_productos_visibles(driver):
+    # Configura espera explícita en máximo 5 segundos
+    wait = WebDriverWait(driver, 5)
+
+    # Abrir página
+    driver.get(URL)
+
+    login(
+        driver,
+        TEST_CREDENTIALS["valid"]["username"],
+        TEST_CREDENTIALS["valid"]["password"],
+    )
+
+    # - obtener la lista de elementos de todos los productos visibles usando el selector de clase `.inventory_item`
+    products_container = wait.until(
+        EC.visibility_of_element_located((By.ID, "inventory_container"))
+    )
+    products = products_container.find_elements(By.CLASS_NAME, "inventory_item")
+
+    # - verificar que la cantidad de productos obtenidos sea mayor a cero
+    assert len(products) > 0
+
+    # - capturar el primer producto de la lista (índice 0)
+    # - obtener el elemento contenedor del nombre del primer producto (`data-test="inventory-item-name"`)
+    # - verificar que el nombre del primer producto obtenido es "Sauce Labs Backpack"
+    # - obtener el elemento contenedor del precio del primer producto (`data-test="inventory-item-price"`)
+    # - verificar que el precio del primer producto obtenido es "$29.99"
