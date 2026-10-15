@@ -118,7 +118,29 @@ def test_catalogo_contiene_elemento_menu_hamburguesa(driver):
     # - verificar que el botón del menú hamburguesa esté visible
     assert burger_menu_element.is_displayed()
 
+
+def test_catalogo_contiene_elemento_filtro(driver):
+    # Configura espera explícita en máximo 5 segundos
+    wait = WebDriverWait(driver, 5)
+
+    # Abrir página
+    driver.get(URL)
+
+    login(
+        driver,
+        TEST_CREDENTIALS["valid"]["username"],
+        TEST_CREDENTIALS["valid"]["password"],
+    )
+
     # - obtener el elemento de filtro de productos (`data-test="product-sort-container"`)
+    filter_element = wait.until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='product-sort-container']")
+        )
+    )
+
     # - verificar que el elemento de filtro esté visible
+    assert filter_element.is_displayed()
+
     # - obtener el elemento del carrito de compras (`data-test="shopping-cart-link"`)
     # - verificar que el elemento del carrito de comrpas esté visible
