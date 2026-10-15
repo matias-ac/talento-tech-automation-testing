@@ -47,4 +47,9 @@ def test_catalogo_contiene_titulo_correcto(driver):
     assert header_title_element.text == "Swag Labs"
 
     # - obtener el elemento contenedor de productos (`data-test="title"`)
+    products_container_title = wait.until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-test='title']"))
+    )
+
     # - verificar que el título del catálogo sea "Products"
+    assert products_container_title.text == "Products"
