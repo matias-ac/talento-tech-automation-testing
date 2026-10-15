@@ -78,7 +78,15 @@ def test_catalogo_contiene_productos_visibles(driver):
     assert len(products) > 0
 
     # - capturar el primer producto de la lista (índice 0)
+    first_product = products[0]
+
     # - obtener el elemento contenedor del nombre del primer producto (`data-test="inventory-item-name"`)
+    first_product_name = first_product.find_element(
+        By.CSS_SELECTOR, "[data-test='inventory-item-name']"
+    )
+
     # - verificar que el nombre del primer producto obtenido es "Sauce Labs Backpack"
+    assert first_product_name.text == "Sauce Labs Backpack"
+
     # - obtener el elemento contenedor del precio del primer producto (`data-test="inventory-item-price"`)
     # - verificar que el precio del primer producto obtenido es "$29.99"
