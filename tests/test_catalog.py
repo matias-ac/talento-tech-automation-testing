@@ -95,3 +95,30 @@ def test_catalogo_contiene_productos_visibles(driver):
 
     # - verificar que el precio del primer producto obtenido es "$29.99"
     assert "$29.99" in first_product_price.text
+
+
+def test_catalogo_contiene_elemento_menu_hamburguesa(driver):
+    # Configura espera explícita en máximo 5 segundos
+    wait = WebDriverWait(driver, 5)
+
+    # Abrir página
+    driver.get(URL)
+
+    login(
+        driver,
+        TEST_CREDENTIALS["valid"]["username"],
+        TEST_CREDENTIALS["valid"]["password"],
+    )
+
+    # - obtener el elemento botón del menú hamburguesa (ID: `react-burger-menu-btn`)
+    burger_menu_element = wait.until(
+        EC.visibility_of_element_located((By.ID, "react-burger-menu-btn"))
+    )
+
+    # - verificar que el botón del menú hamburguesa esté visible
+    assert burger_menu_element.is_displayed()
+
+    # - obtener el elemento de filtro de productos (`data-test="product-sort-container"`)
+    # - verificar que el elemento de filtro esté visible
+    # - obtener el elemento del carrito de compras (`data-test="shopping-cart-link"`)
+    # - verificar que el elemento del carrito de comrpas esté visible
