@@ -142,5 +142,26 @@ def test_catalogo_contiene_elemento_filtro(driver):
     # - verificar que el elemento de filtro esté visible
     assert filter_element.is_displayed()
 
+
+def test_catalogo_contiene_elemento_carrito(driver):
+    # Configura espera explícita en máximo 5 segundos
+    wait = WebDriverWait(driver, 5)
+
+    # Abrir página
+    driver.get(URL)
+
+    login(
+        driver,
+        TEST_CREDENTIALS["valid"]["username"],
+        TEST_CREDENTIALS["valid"]["password"],
+    )
+
     # - obtener el elemento del carrito de compras (`data-test="shopping-cart-link"`)
+    cart_element = wait.until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='shopping-cart-link']")
+        )
+    )
+
     # - verificar que el elemento del carrito de comrpas esté visible
+    assert cart_element.is_displayed()
